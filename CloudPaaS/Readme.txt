@@ -5,38 +5,38 @@ link      https://github.com/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer
 
 
 CONTENTS OF THIS FILE
-------------------------
+---------------------
  * CloudPaaS Functions Sniff
  * Requirement
  * Installation
- * How to Run	
+ * How to Run    
  * Customization
 
 
-CloudPaaS Functions Sniff	
+CloudPaaS Functions Sniff    
 -------------------------
 
 CloudPaaS contains the 3 sniff classes each for Local FileSystem, Session and Database.
 
 1) CloudPaaS.Functions.LocalFileSystem
-	This sniff find out PHP-Local FileSystem API which are not stateless and scalable on Cloud platform.
+    This sniff find out PHP-Local FileSystem API which are not stateless and scalable on Cloud platform.
 
 
 2) CloudPaaS.Functions.Session
-	This sniff find out PHP-Session API which are not stateless and scalable on Cloud platform.
+    This sniff find out PHP-Session API which are not stateless and scalable on Cloud platform.
 
 3) CloudPaaS.Functions.Database
-	This sniff find out PHP-Database API which are not stateless and scalable on Cloud platform.
+    This sniff find out PHP-Database API which are not stateless and scalable on Cloud platform.
 
 
 These are defined in following format.
 
      Severity-ErrorType-ErrorCode-Function Name
 
-Severity     	Integer	Severity for function.(between 0-5)
-ErrorType   	String 	Error Type can be Error or Warning.
-ErrorCode	    Integer	Error Code for function.(eg.2001,2002)
-Function Name	String	This can be either full function name or regular expression for finding match pattern function.(eg.Fwrite,mysql_*);
+Severity         Integer    Severity for function.(between 0-5)
+ErrorType       String     Error Type can be Error or Warning.
+ErrorCode        Integer    Error Code for function.(eg.2001,2002)
+Function Name    String    This can be either full function name or regular expression for finding match pattern function.(eg.Fwrite,mysql_*);
 
 eg. 5-warning-2014-mysql_*,5-error-1026-chmod.
 
@@ -101,50 +101,50 @@ Customization
 You can include CloudPaaS Sniffs in your own standard and override the properties for each sniff in ruleset.xml as follows.
 
 1) Define new function list.
-	You can override the default function list defined in sniffs as follows.
+    You can override the default function list defined in sniffs as follows.
 
 <property name="functionList" type="array" value="5-error-2003-fopen,5-warning-2004-fread,5-error-2005-fwrite">
  
  *Value passed to property should be in "Severity-ErrorType-ErrorCode-Function Name" format.
 
 2) Add new functions to the default function list.
-	You can add new functions to the default list defined in sniffs using 'addFunctions' property in ruleset.xml as follows,
+    You can add new functions to the default list defined in sniffs using 'addFunctions' property in ruleset.xml as follows,
 
 <property name="addFunctions" type="array" value="5-error-2111-fopen">
 
  *Value passed to property should be in "Severity-ErrorType-ErrorCode-Function Name" format.
 
 3) Ignore function execution.
-	You can ignore the function execution using 'ignoreFunctions' property in ruleset.xml as follows,
+    You can ignore the function execution using 'ignoreFunctions' property in ruleset.xml as follows,
 
 <property name="ignoreFunctions" type="array" value="fopen,fwrite">
  
  *Value passed to property should be only Function Name.
 
 4) Find out the functions of particular error codes.
-	You can find out the functions particular error codes using 'errorCodes' property in ruleset.xml as follows,
+    You can find out the functions particular error codes using 'errorCodes' property in ruleset.xml as follows,
 
 <property name="errorCodes" type="array" value="2001,2002">
 
  *Value passed to property should be only Error Codes.
 
 5) Ignore error codes from execution.
-	You can ignore the error codes from  execution using 'ignoreCodes' property in ruleset.xml as follows,
+    You can ignore the error codes from  execution using 'ignoreCodes' property in ruleset.xml as follows,
 
 <property name="ignoreCodes" type="array" value="fopen,fwrite">
 
  *Value passed to property should be only Function Name.
 
 6) Show/hide line of code in the error message.
-	You can show/hide the line of code in error message output using 'showLineOfCode' property as follows,
-	
+    You can show/hide the line of code in error message output using 'showLineOfCode' property as follows,
+    
 <property name="showLineOfCode" value="true/false">
 
 By default the value is 'true'.
 
 7) Regular expression match.
-	If you want to find the functions using regular expression, then set the 'regxFlag' property value to 'true'.
-	
+    If you want to find the functions using regular expression, then set the 'regxFlag' property value to 'true'.
+    
 <property name="regxFlag" value="true/false">
 
 By default for LocalFileSystem ,'regxFlag' value is false.
@@ -159,26 +159,26 @@ You can include the CloudPaaS sniffs into your standards and override the proper
 <rule ref="CloudPaaS.Functions.LocalFileSystem">
   <properties>
 
-<!-- Override the default function list.-->	
+    <!-- Override the default function list.-->    
     <property name="functionList"  type="array" value="5-error-2001-fopen,5-error-2002-fwrite,5-warning-2003-dirname" />
 
-<!-- Ignore function execution.-->	
-   <property name="ignoreFunctions"  type="array" value="fopen,dirname" />
+    <!-- Ignore function execution.-->    
+    <property name="ignoreFunctions"  type="array" value="fopen,dirname" />
     
-<!-- Add new functions to the default function list.-->	
-   <property name="addFunctions"  type="array"  value="5-error-2005-fgets" /> 
+    <!-- Add new functions to the default function list.-->    
+    <property name="addFunctions"  type="array"  value="5-error-2005-fgets" /> 
     
-<!-- Ignore Error Codes from execution.-->	
-   <property name="ignoreCodes"  type="array" value="2001,2005" />
+    <!-- Ignore Error Codes from execution.-->    
+    <property name="ignoreCodes"  type="array" value="2001,2005" />
 
-  <!--Find out the functions of perticular error codes.-->	
-   <property name="errorCodes"  type="array" value="2002" />
+    <!--Find out the functions of perticular error codes.-->    
+    <property name="errorCodes"  type="array" value="2002" />
     
-<!--Regular expression match.-->	
-   <property name="regxFlag" value="false" />
+    <!--Regular expression match.-->    
+    <property name="regxFlag" value="false" />
 
-<!--Show/hide line of code in the error message.-->	
-   <property name="showLineOfCode" value="true" />
+    <!--Show/hide line of code in the error message.-->    
+    <property name="showLineOfCode" value="true" />
 
   </properties>
- </rule>
+</rule>

@@ -10,9 +10,8 @@
  * @copyright 2011 Copyright © Microsoft Corporation. All Rights Reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version   Release: 1.0.0
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @link      https://github.com/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer
  */
-
 
 /**
  * WindowsAzure_Sniffs_GenericRuleParser.
@@ -25,9 +24,8 @@
  * @copyright 2011 Copyright © Microsoft Corporation. All Rights Reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version   Release: 1.0.0
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @link      https://github.com/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer
  */
-
 
 class WindowsAzure_Sniffs_GenericRuleParser implements PHP_CodeSniffer_Sniff
 {
@@ -230,7 +228,7 @@ class WindowsAzure_Sniffs_GenericRuleParser implements PHP_CodeSniffer_Sniff
      * @param Object-Array $phpcsFile Object of PHP_CodeSniffer_File.
      *
      * @param int          $stackPtr  position of the current token
-     *                                 in the stack passed in $tokens.
+     *                                in the stack passed in $tokens.
      *
      * @return void.
      */
@@ -241,7 +239,7 @@ class WindowsAzure_Sniffs_GenericRuleParser implements PHP_CodeSniffer_Sniff
 
         // get the tokens in array format. //
         $tokens = $phpcsFile->getTokens();
-
+        
         // Get the function name. //
         $funcName = $this->getFunction($phpcsFile, $tokens, $stackPtr);
         if ($funcName) {
@@ -339,28 +337,46 @@ class WindowsAzure_Sniffs_GenericRuleParser implements PHP_CodeSniffer_Sniff
      */
     function getLineOfCode($tokens,$stackPtr)
     {
-        $key = -1;
-        // Get the line Start position.//
-        $startPos=$stackPtr;
-        while ($tokens[$startPos]['line'] == $tokens[$stackPtr]['line']) {
-            $startPos--;
-        }
-        //Get the line ending position.//
-        $endPos=$stackPtr;
-        while ($tokens[$endPos]['line'] == $tokens[$stackPtr]['line']) {
-            $endPos++;
-        }
-        $lineCode='';
-        //Get the line content from startPosition to EndPosition.//
-        for ($i=$startPos+1; $i < $endPos-1; $i++) {
-            $lineCode .= $tokens[$i]['content'];
-            // Remove the WhiteSpace for first content only.//
-            if ($i == $startPos+1) {
-                $lineCode = trim($lineCode);
+        try {
+            // Get the line Start position.//
+            $startPos = $stackPtr;
+            while (
+                $tokens[$startPos]['line'] == $tokens[$stackPtr]['line'] 
+                && $startPos > 0
+            ) {
+                $startPos--;
             }
+            if ($startPos == 0) {
+                $startPos--;
+            }
+            
+            //Get the line ending position.//
+            $endPos = $stackPtr;
+            while (
+                $tokens[$endPos]['line'] == $tokens[$stackPtr]['line'] 
+                && $endPos < sizeof($tokens)-1
+            ) {
+                $endPos++;
+            }
+            $lineCode='';
+            //Get the line content from startPosition to EndPosition.//
+            for ($i = $startPos + 1; $i < $endPos; $i++) {
+                if ($tokens[$i]['code'] == T_COMMENT  ) {
+                    continue;
+                }
+                $lineCode .= ($tokens[$i]['content']);
+                // Remove the WhiteSpace for first content only.//
+                if ($i == $startPos) {
+                    $lineCode = trim($lineCode);
+                }
+            }
+            $lineCode = trim(str_replace("%", "%%", $lineCode));
+            
+            return $lineCode;
+        } catch (Exception $e){
+            echo "Exception found for Function - ".$tokens[$stackPtr]['code'];
+            exit;
         }
-        $lineCode = str_replace("%", "%%", $lineCode);
-        return $lineCode;
     }
 
     /**
@@ -377,9 +393,19 @@ class WindowsAzure_Sniffs_GenericRuleParser implements PHP_CodeSniffer_Sniff
     function getFunction($phpcsFile , $tokens, $stackPtr)
     {
         // Find the Next Token.//
-        $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        $nextToken 
+            = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         // Check the code of nextToken with ignoreList codes.//
         if (in_array($tokens[$nextToken]['code'], $this->ignoreTokens) === true) {
+            // Ignore the PHP function.//
+            return;
+        }
+        
+        //Get the Previous Token.//
+        $prevToken 
+            = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        // Check the code of prevToken with ignoreList codes.//
+        if (in_array($tokens[$prevToken]['code'], $this->ignoreTokens) === true) {
             // Ignore the PHP function.//
             return;
         }

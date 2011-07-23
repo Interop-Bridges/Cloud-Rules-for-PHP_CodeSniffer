@@ -12,17 +12,17 @@ local file system, session memory and DB should use instead the storage capabili
 by the cloud platform to ensure that applications are stateless and therefore scalable.  
 
 In the same way a scalable Windows Azure application should not create an affinity with a 
-particular role instance as there’s no guarantee that multiple requests from the same user 
+particular role instance as there is no guarantee that multiple requests from the same user 
 will be sent to the same instance. Instead, any client-specific state should be written 
 to Windows Azure storage, stored in SQL Azure Database, or maintained externally in some other way. 
 
 This package contains:
--	A set of generic Platform as a Service rules for PHP_CodeSniffer located in the CloudPaaS folder.
--	A set of Windows Azure rules for PHP_CodeSniffer that takes into consideration the custom storage 
-        offered by Windows Azure and located in the WindowsAzure folder.
--	A PHP sample application that uses local file system and the correspondent redesigned for scalability 
-        version located in the Samples\DemoGallery folder. 
--	A PHP sample application that is stateless Samples\DemoWindowsAzureGallery folder. 
+- A set of generic Platform as a Service rules for PHP_CodeSniffer located in the CloudPaaS folder.
+- A set of Windows Azure rules for PHP_CodeSniffer that takes into consideration the custom storage 
+  offered by Windows Azure and located in the WindowsAzure folder.
+- A PHP sample application that uses local file system and the correspondent redesigned for scalability 
+  version located in the Samples\DemoGallery folder. 
+- A PHP sample application that is stateless Samples\DemoWindowsAzureGallery folder. 
 
 The advantage of the static analysis is that developer gets feedback the earliest coding phase 
 without having to deploy the code in the cloud. On the other side static analysis is not 
@@ -36,7 +36,7 @@ We are hoping that the Cloud PHP_CodeSniffer rules will be extended with new cus
 cloud providers. 
 
 How to run the PHP_CodeSniffer rules
-===============================
+====================================
 Installation
 ------------
 Please refer to the readme.txt files for installing CloudPaaS or WindowsAzure sniffs and additional examples.

@@ -11,9 +11,8 @@
  * @copyright 2011 Copyright © Microsoft Corporation. All Rights Reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version   Release: 1.0.0
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @link      https://github.com/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer
  */
- 
 
 /**
  * CloudPaaS_Sniffs_Functions_SessionSniff.
@@ -26,7 +25,7 @@
  * @copyright 2011 Copyright © Microsoft Corporation. All Rights Reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version   Release: 1.0.0
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @link      https://github.com/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer
  */
 
 class CloudPaaS_Sniffs_Functions_SessionSniff extends

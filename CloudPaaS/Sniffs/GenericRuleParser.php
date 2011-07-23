@@ -13,7 +13,6 @@
  * @link      https://github.com/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer
  */
 
-
 /**
  * CloudPaaS_Sniffs_GenericRuleParser.
  *
@@ -240,7 +239,7 @@ class CloudPaaS_Sniffs_GenericRuleParser implements PHP_CodeSniffer_Sniff
 
         // get the tokens in array format. //
         $tokens = $phpcsFile->getTokens();
-
+        
         // Get the function name. //
         $funcName = $this->getFunction($phpcsFile, $tokens, $stackPtr);
         if ($funcName) {
@@ -279,7 +278,7 @@ class CloudPaaS_Sniffs_GenericRuleParser implements PHP_CodeSniffer_Sniff
 
                     if ($this->showLineOfCode == true) {
                         $lineCode = $this->getLineOfCode($tokens, $stackPtr);
-                        $message .= " in the line '" .$lineCode."'";
+                        $message .= " in the line '".$lineCode."'";
                     }
                     $message .= ".";
 
@@ -338,27 +337,46 @@ class CloudPaaS_Sniffs_GenericRuleParser implements PHP_CodeSniffer_Sniff
      */
     function getLineOfCode($tokens,$stackPtr)
     {
-        // Get the line Start position.//
-        $startPos=$stackPtr;
-        while ($tokens[$startPos]['line'] == $tokens[$stackPtr]['line']) {
-            $startPos--;
-        }
-        //Get the line ending position.//
-        $endPos=$stackPtr;
-        while ($tokens[$endPos]['line'] == $tokens[$stackPtr]['line']) {
-            $endPos++;
-        }
-        $lineCode='';
-        //Get the line content from startPosition to EndPosition.//
-        for ($i = $startPos+1; $i < $endPos-1; $i++) {
-            $lineCode .= ($tokens[$i]['content']);
-            // Remove the WhiteSpace for first content only.//
-            if ($i == $startPos+1) {
-                $lineCode = trim($lineCode);
+        try {
+            // Get the line Start position.//
+            $startPos = $stackPtr;
+            while (
+                $tokens[$startPos]['line'] == $tokens[$stackPtr]['line'] 
+                && $startPos > 0
+            ) {
+                $startPos--;
             }
+            if ($startPos == 0) {
+                $startPos--;
+            }
+            
+            //Get the line ending position.//
+            $endPos = $stackPtr;
+            while (
+                $tokens[$endPos]['line'] == $tokens[$stackPtr]['line'] 
+                && $endPos < sizeof($tokens)-1
+            ) {
+                $endPos++;
+            }
+            $lineCode='';
+            //Get the line content from startPosition to EndPosition.//
+            for ($i = $startPos + 1; $i < $endPos; $i++) {
+                if ($tokens[$i]['code'] == T_COMMENT  ) {
+                    continue;
+                }
+                $lineCode .= ($tokens[$i]['content']);
+                // Remove the WhiteSpace for first content only.//
+                if ($i == $startPos) {
+                    $lineCode = trim($lineCode);
+                }
+            }
+            $lineCode = trim(str_replace("%", "%%", $lineCode));
+            
+            return $lineCode;
+        } catch (Exception $e){
+            echo "Exception found for Function - ".$tokens[$stackPtr]['code'];
+            exit;
         }
-        $lineCode = str_replace("%", "%%", $lineCode);
-        return $lineCode;
     }
 
     /**
@@ -378,6 +396,13 @@ class CloudPaaS_Sniffs_GenericRuleParser implements PHP_CodeSniffer_Sniff
         $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         // Check the code of nextToken with ignoreList codes.//
         if (in_array($tokens[$nextToken]['code'], $this->ignoreTokens) === true) {
+            // Ignore the PHP function.//
+            return;
+        }
+        $prevToken 
+            = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        // Check the code of prevToken with ignoreList codes.//
+        if (in_array($tokens[$prevToken]['code'], $this->ignoreTokens) === true) {
             // Ignore the PHP function.//
             return;
         }
@@ -422,7 +447,6 @@ class CloudPaaS_Sniffs_GenericRuleParser implements PHP_CodeSniffer_Sniff
         }
         return $key;
     }
-
 }
 
 ?>
