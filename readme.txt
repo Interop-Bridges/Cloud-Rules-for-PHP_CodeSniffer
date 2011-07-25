@@ -45,7 +45,8 @@ Run the sniffs against generic Cloud Provider rules:
 ----------------------------------------------------
     phpcs --standard=CloudPaaS  <your PHP application root >
 
-Download demoGallery from https://github.com/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer/Samples/DemoGallerySample into <Your Project folder >
+Download demoGallery https://github.com/downloads/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer/DemoGallery.zip and
+extract into <Your Project folder >
     phpcs --standard=CloudPaaS demoGallery
 
 Scoping the analysis to selected sniffs:
@@ -56,7 +57,8 @@ Run the sniffs against Windows Azure rules:
 -------------------------------------------
     phpcs --standard=CloudPaaS  <your PHP application root >
 
-Download demoGallery from https://github.com/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer/Samples/DemoGallerySample into <Your Project folder >
+Download demoGallery https://github.com/downloads/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer/DemoGallery.zip and
+extract into <Your Project folder >
 
     phpcs --standard=WindowsAzure  demoGallery 
 
