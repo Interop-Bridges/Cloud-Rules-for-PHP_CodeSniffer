@@ -1,4 +1,4 @@
-copyright 2011 Copyright © Microsoft Corporation. All Rights Reserved.
+copyright 2011 Copyright Â© Microsoft Corporation. All Rights Reserved.
 license   http://www.opensource.org/licenses/bsd-license.php BSD License
 version   Release: 1.0.0
 link      https://github.com/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer
@@ -54,7 +54,7 @@ or visit the following link for installation.
 Installation
 ------------
 
-1) Download https://github.com/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer/CloudPaaS.zip
+1) Download https://github.com/downloads/Interop-Bridges/Cloud-Rules-for-PHP_CodeSniffer/CloudPaaS.zip
 
 2) Unzip CloudPaaS.zip.
 
