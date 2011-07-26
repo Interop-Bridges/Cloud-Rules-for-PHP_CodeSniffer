@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+a {
+    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333333;
+    font-size: 12px;
+    text-decoration: underline;
+    line-height: 20px;
+}
+
+a:hover {
+    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333333;
+    font-size: 12px;
+    line-height: 20px;
+    text-decoration: none;
+}
+
+.curpage {
+    color: #FF0000;
+    font-weight: bold;
+}
+
+.buttonbg {
+    background-color: #EAEAEC;
+}

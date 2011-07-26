@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<ruleset name="WindowsAzure">
+ <description>Coding standards for Windows Azure.</description>
+</ruleset>
